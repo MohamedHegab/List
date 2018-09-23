@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  rolify
   attr_accessor :role_input
 
   devise :database_authenticatable, :registerable,
