@@ -14,7 +14,6 @@
 #
 
 class User < ApplicationRecord
-  extend Enumerize
   rolify
   attr_accessor :role_input
 
@@ -27,8 +26,10 @@ class User < ApplicationRecord
   validates_presence_of :username
   validates_presence_of :role_input, on: :create
   validates_uniqueness_of :username, :email
+  validates :role_input, inclusion: { in: %w(member admin),
+    message: "%{value} is not a valid role" }
 
-  enumerize :role_input, in: {member: 0, admin: 1}, scope: true
+  enum role_input: [:member, :admin]
 
   def assign_role
     if self.role_input && !self.has_role?(self.role_input)
