@@ -10,7 +10,7 @@ describe Api::V1::UsersController, type: :controller do
 
       it "renders the json representation for the user record just created" do
         user_response = json_response
-        expect(user_response[:data][:email]).to eql @user_attributes[:email]
+        expect(user_response[:data][:attributes][:email]).to eql @user_attributes[:email]
       end
 
       it { should respond_with 201 }
@@ -24,17 +24,12 @@ describe Api::V1::UsersController, type: :controller do
         post :create, params: { user: @invalid_user_attributes }
       end
 
-      it "renders an errors json" do
-        user_response = json_response
-        expect(user_response).to have_key(:code)
-      end
-
       it "renders the json errors on why the user could not be created" do
         user_response = json_response
-        expect(user_response[:data][:validation_errors][0][:messages][0]).to include "can't be blank"
+        expect(user_response[:errors][:email]).to include "can't be blank"
       end
 
-      it { should respond_with 200 }
+      it { should respond_with 422 }
     end
   end
 end
