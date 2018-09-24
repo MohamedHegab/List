@@ -14,26 +14,16 @@
 #
 
 class User < ApplicationRecord
-  rolify
-  attr_accessor :role_input
-
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   ############## Callbacks #################
-  before_create :assign_role
 
   ############## Validations #################
   validates_presence_of :username
-  validates_presence_of :role_input, on: :create
-  validates_uniqueness_of :username, :email
-  validates :role_input, inclusion: { in: %w(member admin),
+  validates_presence_of :role, on: :create
+  validates_uniqueness_of :username
+  validates :role, inclusion: { in: %w(member admin),
     message: "%{value} is not a valid role" }
 
-  enum role_input: [:member, :admin]
-
-  def assign_role
-    if self.role_input && !self.has_role?(self.role_input)
-      self.add_role role_input
-    end
-  end
+  enum role: {member: 0, admin: 1}
 end

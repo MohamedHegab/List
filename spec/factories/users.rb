@@ -22,13 +22,7 @@ FactoryBot.define do
 
     factory :admin do
         after(:build) do |user|
-            user.role_input = "admin"
-        end
-    end
-
-    factory :member do
-        after(:build) do |user| 
-            user.role_input = "member"
+            user.role = :admin
         end
     end
   end
