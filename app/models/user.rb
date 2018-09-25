@@ -19,6 +19,9 @@ class User < ApplicationRecord
   ############## Callbacks #################
   before_create :generate_authentication_token!
 
+  ############ Assocciations ############
+  has_many :lists, foreign_key: :owner_id, dependent: :destroy
+
   ############## Validations #################
   validates_presence_of :username
   validates_uniqueness_of :username, :auth_token
