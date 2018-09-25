@@ -7,7 +7,7 @@ class Ability
       can [:create, :read], List
       can [:update, :destroy, :assign_member, :unassign_member], List, owner_id: user.id 
     else
-      can :read, :all
+      can :read, List, id: user.list_ids
     end
   end
 end

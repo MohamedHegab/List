@@ -3,6 +3,11 @@ class Api::V1::ListsController < Api::BaseController
   before_action :set_list, only: [:show, :update, :destroy, :assign_member, :unassign_member]
 	load_and_authorize_resource
 	
+	def index
+		lists = List.accessible_by(current_ability)
+    render json: lists, status: 200
+	end
+
 	def show
 		render json: @list, status: 200
 	end

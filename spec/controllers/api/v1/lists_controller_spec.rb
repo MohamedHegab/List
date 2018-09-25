@@ -1,7 +1,38 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::ListsController, type: :controller do
-	describe "GET #show" do
+	describe "GET #index" do 
+    context "admin can access all lists" do
+      login_admin
+      before(:each) do
+        FactoryBot.create(:list, owner: User.first)
+        FactoryBot.create(:list)
+        get :index
+      end
+
+      it "lists all the lists" do
+        list_response = json_response
+        expect(list_response[:data].length).to eql 2
+      end
+    end
+
+    context "member can access only list he is member" do
+      login_member
+      
+      before(:each) do
+        @lists = FactoryBot.create_list(:list, 3)
+        @lists.first.assign_member(User.first.id)
+        get :index
+      end
+
+      it "lists all the lists" do
+        list_response = json_response
+        expect(list_response[:data].length).to eql 1
+      end
+    end
+  end
+
+  describe "GET #show" do
 		login_admin
     before(:each) do
       @list = FactoryBot.create :list
@@ -200,6 +231,4 @@ RSpec.describe Api::V1::ListsController, type: :controller do
       it {should respond_with 200}
   	end
   end
-
-
 end
