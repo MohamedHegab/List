@@ -5,7 +5,7 @@ class Api::V1::SessionsController < Api::BaseController
       sign_in @user, store: false
       @user.generate_authentication_token!
       @user.save
-      render json: @user, status: 201, location: [:api, @user]
+      render json: @user, status: 200, location: [:api, @user]
     else
       render json: { errors: "invalid email or password" }, status: 422
     end

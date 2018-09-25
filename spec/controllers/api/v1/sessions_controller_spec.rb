@@ -2,19 +2,19 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::SessionsController, type: :controller do
 	before(:each) do
-    @user = FactoryBot.create :admin
+    @user = FactoryBot.create :admin, password: "MyPassword123", password_confirmation: "MyPassword123"
   end
 
   context "when the credentials are correct" do
 
     before(:each) do
-      credentials = { email: @user.email, password: "MyPassword123", role: 'admin' }
+      credentials = { email: @user.email, password: "MyPassword123"}
       post :create, params:{ user: credentials }
     end
 
     it "returns the user record corresponding to the given credentials" do
       @user.reload
-      expect(json_response[:data][:attributes][:auth_token]).to eql @user.auth_token
+      expect(json_response[:data][:attributes][:"auth-token"]).to eql @user.auth_token
     end
 
     it { should respond_with 200 }
@@ -33,4 +33,6 @@ RSpec.describe Api::V1::SessionsController, type: :controller do
 
     it { should respond_with 422 }
   end
+
+
 end
