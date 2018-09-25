@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       get 'users/signout' => 'sessions#destroy'
       post 'users/signin' => 'sessions#create'
       post 'users/signup' => 'users#create'
+      devise_for :users, only: []
     end
   end
 end

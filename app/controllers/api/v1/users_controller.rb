@@ -1,7 +1,8 @@
-class Api::V1::UsersController < ApplicationController
+class Api::V1::UsersController < Api::BaseController
 	def index
+    # authenticate_with_token!
     users = User.all
-    render json: users, status: 200
+    render json: users, status: 200, each_serializer: Users::IndexSerializer
   end
 
   def create
