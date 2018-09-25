@@ -13,13 +13,8 @@ class Api::V1::SessionsController < Api::BaseController
 
   def destroy
     authenticate_with_token!
-    if current_user
-      current_user.generate_authentication_token!
-      current_user.save
-      render_success(nil, 204, "user signed out successfully", current_user)
-      # render json: {status: 'success', data: current_user}
-    else
-      # render_fail('There user not signed in')
-    end
+    current_user.generate_authentication_token!
+    current_user.save
+    render json: { message: 'user signed out successfully', status: 204}
   end
 end

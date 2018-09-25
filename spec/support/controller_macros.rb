@@ -13,7 +13,7 @@ module ControllerMacros
       @request.env["devise.mapping"] = Devise.mappings[:user]
       user = FactoryBot.create(:user)
       sign_in user
-      api_authorize(user.auth_token)
+      api_authorize(admin.auth_token)
     end
   end
 end
