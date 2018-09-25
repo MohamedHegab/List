@@ -20,7 +20,8 @@ class User < ApplicationRecord
   before_create :generate_authentication_token!
 
   ############ Assocciations ############
-  has_many :lists, foreign_key: :owner_id, dependent: :destroy
+  has_many :owns_lists, foreign_key: :owner_id, class_name: 'List', dependent: :destroy
+  has_and_belongs_to_many :lists
 
   ############## Validations #################
   validates_presence_of :username
