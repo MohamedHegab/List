@@ -48,7 +48,7 @@ RSpec.describe Api::V1::SessionsController, type: :controller do
         expect(json_response[:message]).to eql "user signed out successfully"
       end
 
-      it { expect(json_response[:status]).to eql 204 }
+      it { should respond_with 204 }
     end
   end
 

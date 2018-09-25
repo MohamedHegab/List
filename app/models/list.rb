@@ -8,10 +8,16 @@ class List < ApplicationRecord
 
 	def assign_member(user_id)
 		user = User.find_by(id: user_id)
-		if user && user != self.owner
-			self.users << user
+		if user == self.owner
+			return {status: false, message: "The owner cannot be assigned as member"}
+		elsif users.include?(user)
+			return {status: false, message: "This member already in the list"}
+		end
+		if user
+			self.users << user 
+			return {status: true}
 		else
-			return nil
+			return {status: false, message: "Cannot assign this member"}
 		end
 	end
 

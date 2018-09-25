@@ -15,6 +15,6 @@ class Api::V1::SessionsController < Api::BaseController
     authenticate_with_token!
     current_user.generate_authentication_token!
     current_user.save
-    render json: { message: 'user signed out successfully', status: 204}
+    render json: { message: 'user signed out successfully'}, status: 204
   end
 end

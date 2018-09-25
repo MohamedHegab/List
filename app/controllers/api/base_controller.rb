@@ -4,7 +4,7 @@ class Api::BaseController < ApplicationController
 	# before_action :restrict_access_token
 
 	def authenticate_with_token! 
-  	raise ApplicationController::NotAuthorized unless user_signed_in?
+  	raise ApplicationController::NotAuthinticated unless user_signed_in?
   end
 
   def user_signed_in?

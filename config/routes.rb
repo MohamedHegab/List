@@ -9,6 +9,14 @@ Rails.application.routes.draw do
       post 'users/signin' => 'sessions#create'
       post 'users/signup' => 'users#create'
       resources :users, only: [:index, :show]
+
+      resources :lists do 
+        member do
+          post 'assign_member'
+          post 'unassign_member'
+        end
+      end
+      
       devise_for :users, only: []
     end
   end

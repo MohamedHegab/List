@@ -2,7 +2,7 @@ module ExceptionHandler
   # provides the more graceful `included` method
   extend ActiveSupport::Concern
 
-  NotAuthorized = Class.new(StandardError)
+  NotAuthinticated = Class.new(StandardError)
   
   included do
     rescue_from ActiveRecord::RecordNotFound do |e|
@@ -13,8 +13,12 @@ module ExceptionHandler
       render json: { message: e.message , status: :unprocessable_entity }
     end
 
-    rescue_from ApplicationController::NotAuthorized do |e|
-      render json: { errors: "Not Authorized", status: :fail}
+    rescue_from ApplicationController::NotAuthinticated do |e|
+      render json: { errors: "Not Authenticated", status: :fail}
+    end
+
+    rescue_from CanCan::AccessDenied do |exception|
+      render json: {message: 'Don\'t have authorization', status: :fail, code: 8000} 
     end
   end
 end
