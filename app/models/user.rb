@@ -20,10 +20,9 @@ class User < ApplicationRecord
 
   ############## Validations #################
   validates_presence_of :username
-  validates_presence_of :role, on: :create
   validates_uniqueness_of :username
   validates :role, inclusion: { in: %w(member admin),
-    message: "%{value} is not a valid role" }
+    message: "%{value}is not a valid role" }, on: :create
 
   enum role: {member: 0, admin: 1}
 end

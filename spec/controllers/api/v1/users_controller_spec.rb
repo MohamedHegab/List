@@ -1,6 +1,22 @@
 require 'rails_helper'
 
 describe Api::V1::UsersController, type: :controller do
+  describe "GET #index" do
+    context "when is successfully list users" do
+      before(:each) do
+        @users = FactoryBot.create_list(:user, 3)
+        get :index
+      end
+      
+      it "lists users" do
+        user_response = json_response
+        expect(user_response[:data].count).to eql 3
+      end
+
+      it { should respond_with 200 }
+    end
+  end
+
   describe "POST #create" do
     context "when is successfully created" do
       before(:each) do
