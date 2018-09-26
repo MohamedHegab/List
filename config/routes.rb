@@ -47,7 +47,9 @@ Rails.application.routes.draw do
       shallow do
         resources :lists do 
           resources :cards do
-            resources :comments
+            resources :comments do
+              resources :comments
+            end
           end
           member do
             post 'assign_member'
