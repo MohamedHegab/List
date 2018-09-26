@@ -3,4 +3,5 @@ class CardSerializer < ActiveModel::Serializer
 
   has_one :owner
   belongs_to :list
+  has_many :comments
 end

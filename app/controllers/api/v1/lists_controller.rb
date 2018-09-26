@@ -9,7 +9,7 @@ class Api::V1::ListsController < Api::BaseController
 	end
 
 	def show
-		render json: @list, include: ('cards'), status: 200
+		paginate json: @list, include: ('cards'), status: 200
 	end
 
 	def update

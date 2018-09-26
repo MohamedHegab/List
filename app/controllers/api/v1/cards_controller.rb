@@ -1,16 +1,16 @@
 class Api::V1::CardsController < Api::BaseController
 	before_action :authenticate_with_token!
-  before_action :set_list
+  before_action :set_list, except: [:show]
   before_action :set_card, only: [:show, :update, :destroy]
 	load_and_authorize_resource except: [:create]
 	
 	def index
 		cards = @list.cards.accessible_by(current_ability)
-    render json: cards, status: 200
+    paginate json: cards, status: 200
 	end
 
 	def show
-		render json: @card, status: 200
+		render json: @card, include: 'comments', status: 200
 	end
 
 	def update
