@@ -4,8 +4,8 @@ class Api::V1::ListsController < Api::BaseController
 	load_and_authorize_resource
 	
 	def index
-		lists = List.accessible_by(current_ability)
-    paginate json: lists, status: 200
+		lists = List.accessible_by(current_ability).paginate(:page => params[:page], per_page: 10)
+    render json: lists, status: 200
 	end
 
 	def show

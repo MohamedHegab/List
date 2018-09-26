@@ -5,8 +5,8 @@ class Api::V1::CardsController < Api::BaseController
 	load_and_authorize_resource except: [:create]
 	
 	def index
-		cards = @list.cards.accessible_by(current_ability).by_comments
-    paginate json: cards, status: 200
+		cards = @list.cards.accessible_by(current_ability).by_comments.paginate(:page => params[:page], per_page: 10)
+    render json: cards, status: 200
 	end
 
 	def show

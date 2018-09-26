@@ -1,7 +1,7 @@
 class Api::V1::UsersController < Api::BaseController
 	def index
     authenticate_with_token!
-    users = User.all
+    users = User.paginate(:page => params[:page], per_page: 10)
     render json: users, status: 200, each_serializer: Users::IndexSerializer
   end
 

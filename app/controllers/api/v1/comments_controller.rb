@@ -5,8 +5,8 @@ class Api::V1::CommentsController < Api::BaseController
 	load_and_authorize_resource except: [:create]
 	
 	def index
-		comments = Comment.accessible_by(current_ability)
-    paginate json: comments, status: 200
+		comments = Comment.accessible_by(current_ability).paginate(:page => params[:page], per_page: 10)
+    render json: comments, status: 200
 	end
 
 	def show
