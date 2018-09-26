@@ -1,11 +1,12 @@
 class Api::V1::CardsController < Api::BaseController
 	before_action :authenticate_with_token!
   before_action :set_list, except: [:show]
+  before_action :set_page, only: [:index]
   before_action :set_card, only: [:show, :update, :destroy]
 	load_and_authorize_resource except: [:create]
 	
 	def index
-		cards = @list.cards.accessible_by(current_ability).by_comments.paginate(:page => params[:page], per_page: 10)
+		cards = @list.cards.accessible_by(current_ability).by_comments.limit(10).offset(@page * 10)
     render json: cards, status: 200
 	end
 

@@ -1,11 +1,12 @@
 class Api::V1::CommentsController < Api::BaseController
   before_action :authenticate_with_token!
-  before_action :set_card, except: [:show]
-  before_action :set_comment, only: [:show, :update, :destroy]
+  before_action :find_commentable
+  before_action :set_comment, only: [:show]
+	before_action :set_page, only: [:index]
 	load_and_authorize_resource except: [:create]
 	
 	def index
-		comments = Comment.accessible_by(current_ability).paginate(:page => params[:page], per_page: 10)
+		comments = @commentable.comments.accessible_by(current_ability).limit(1).offset(@page * 1)
     render json: comments, status: 200
 	end
 
@@ -22,7 +23,7 @@ class Api::V1::CommentsController < Api::BaseController
 	end
 
 	def create
-	  @comment = Comment.new(comment_params)
+	  @comment = @commentable.comments.new comment_params
 	  @comment.user = current_user
 
 	  authorize! :create, @comment
@@ -44,16 +45,17 @@ class Api::V1::CommentsController < Api::BaseController
 
 	private
 
-	def set_card
-		@card = Card.find(params[:card_id])
-	end
+	def find_commentable
+    @commentable = Comment.find_by_id(params[:comment_id]) if params[:comment_id]
+    @commentable = Card.find_by_id(params[:card_id]) if params[:card_id]
+  end
 
-	def set_comment
-    @comment = Comment.find(params[:id])
-	end
+  def set_comment
+  	@comment = Comment.find(params[:id])
+  end
 
 	def comment_params
-	  params.require(:comment).permit(:content, :commentable_id, :commentable_type)
+	  params.require(:comment).permit(:content)
 	end
 
 end

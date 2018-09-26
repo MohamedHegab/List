@@ -1,10 +1,11 @@
 class Api::V1::ListsController < Api::BaseController
   before_action :authenticate_with_token!
+  before_action :set_page, only: [:index]
   before_action :set_list, only: [:show, :update, :destroy, :assign_member, :unassign_member]
 	load_and_authorize_resource
 	
 	def index
-		lists = List.accessible_by(current_ability).paginate(:page => params[:page], per_page: 10)
+		lists = List.accessible_by(current_ability).limit(10).offset(@page * 10)
     render json: lists, status: 200
 	end
 

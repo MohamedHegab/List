@@ -2,35 +2,71 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::CommentsController, type: :controller do
 	describe "GET #index" do 
-    context "admin can access all comments" do
-      login_admin
-      before(:each) do
-      	@card = FactoryBot.create(:card)
-        3.times { FactoryBot.create(:comment_for_card, user: User.first) }
-        FactoryBot.create(:comment_for_card, commentable: @card)
-        get :index, params: {card_id: @card.id}
+    context "comments for cards" do 
+      context "admin can access all comments" do
+        login_admin
+        before(:each) do
+          @card = FactoryBot.create(:card)
+          3.times { FactoryBot.create(:comment_for_card, commentable: @card, user: User.first) }
+          FactoryBot.create(:comment_for_card, commentable: @card)
+          get :index, params: {card_id: @card.id}
+        end
+
+        it "cards all the comments" do
+          comment_response = json_response
+          expect(comment_response[:data].length).to eql 4
+        end
       end
 
-      it "cards all the comments" do
-        comment_response = json_response
-        expect(comment_response[:data].length).to eql 4
+      context "member can access all comments for the card he is member" do
+        login_member
+        
+        before(:each) do
+          @card = FactoryBot.create(:card)
+          @card.list.assign_member(User.first.id)
+          3.times { FactoryBot.create(:comment_for_card, user: User.first, commentable: @card) }
+          FactoryBot.create(:comment_for_card, commentable: @card)
+          get :index, params: {card_id: @card.id}
+        end
+
+        it "" do
+          comment_response = json_response
+          expect(comment_response[:data].length).to eql 4
+        end
       end
     end
 
-    context "member can access all comments for the card he is member" do
-      login_member
-      
-      before(:each) do
-        @card = FactoryBot.create(:card)
-        @card.list.assign_member(User.first.id)
-        3.times { FactoryBot.create(:comment_for_card, user: User.first, commentable: @card) }
-        FactoryBot.create(:comment_for_card, commentable: @card)
-        get :index, params: {card_id: @card.id}
+    context "comments for comments" do 
+      context "admin can access all comments" do
+        login_admin
+        before(:each) do
+          @card = FactoryBot.create(:card)
+        	@comment = FactoryBot.create(:comment_for_card, commentable: @card)
+          3.times { FactoryBot.create(:comment_for_comment, commentable: @comment) }
+          get :index, params: {comment_id: @comment.id}
+        end
+
+        it "comments all the comments" do
+          comment_response = json_response
+          expect(comment_response[:data].length).to eql 3
+        end
       end
 
-      it "" do
-        comment_response = json_response
-        expect(comment_response[:data].length).to eql 4
+      context "member can access all comments for the card he is member" do
+        login_member
+        
+        before(:each) do
+          @card = FactoryBot.create(:card)
+          @card.list.assign_member(User.first.id)
+          @comment = FactoryBot.create(:comment_for_card, commentable: @card)
+          3.times { FactoryBot.create(:comment_for_comment, commentable: @comment) }
+          get :index, params: {comment_id: @comment.id}
+        end
+
+        it "" do
+          comment_response = json_response
+          expect(comment_response[:data].length).to eql 3
+        end
       end
     end
   end

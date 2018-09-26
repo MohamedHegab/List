@@ -10,4 +10,10 @@ class Api::BaseController < ApplicationController
   def user_signed_in?
     current_user.present?
   end
+
+  private
+  
+  def set_page
+    @page = params[:page] || 0
+  end
 end

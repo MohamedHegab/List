@@ -11,7 +11,6 @@ gem 'cancancan'
 gem 'devise', '~> 4.4', '>= 4.4.3'
 gem 'dotenv', '~> 2.2', '>= 2.2.1'
 gem 'active_model_serializers'
-gem 'will_paginate', '~> 3.1', '>= 3.1.6'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
