@@ -5,11 +5,11 @@ class Api::V1::ListsController < Api::BaseController
 	
 	def index
 		lists = List.accessible_by(current_ability)
-    render json: lists, status: 200
+    paginate json: lists, status: 200
 	end
 
 	def show
-		paginate json: @list, include: ('cards'), status: 200
+		render json: @list, include: ('cards'), status: 200
 	end
 
 	def update

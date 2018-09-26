@@ -30,9 +30,11 @@ ActiveRecord::Schema.define(version: 2018_09_26_145442) do
     t.string "content"
     t.integer "commentable_id"
     t.string "commentable_type"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "lists", force: :cascade do |t|

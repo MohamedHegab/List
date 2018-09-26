@@ -23,6 +23,7 @@ class User < ApplicationRecord
   has_many :owns_lists, foreign_key: :owner_id, class_name: 'List', dependent: :destroy
   has_many :owns_cards, foreign_key: :owner_id, class_name: 'Card', dependent: :destroy
   has_and_belongs_to_many :lists
+  has_many :comments, dependent: :destroy
 
   ############## Validations #################
   validates_presence_of :username
