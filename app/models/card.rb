@@ -6,4 +6,6 @@ class Card < ApplicationRecord
 
   ############## Validations #################
 	validates_presence_of :title
+
+	scope :by_comments, -> { left_joins(:comments).group(:id).order(Arel.sql('COUNT(comments.id) DESC')).limit(10) }
 end
