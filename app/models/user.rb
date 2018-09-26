@@ -21,6 +21,7 @@ class User < ApplicationRecord
 
   ############ Assocciations ############
   has_many :owns_lists, foreign_key: :owner_id, class_name: 'List', dependent: :destroy
+  has_many :owns_cards, foreign_key: :owner_id, class_name: 'Card', dependent: :destroy
   has_and_belongs_to_many :lists
 
   ############## Validations #################

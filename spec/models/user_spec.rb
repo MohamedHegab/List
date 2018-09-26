@@ -27,6 +27,7 @@ RSpec.describe User, type: :model do
   it { should validate_uniqueness_of(:username) }
   it { should validate_uniqueness_of(:auth_token)}
   it { should have_many(:owns_lists).dependent(:destroy) }
+  it { should have_many(:owns_cards).dependent(:destroy) }
   it { should have_and_belong_to_many(:lists) }
 
 	describe "#generate_authentication_token!" do
