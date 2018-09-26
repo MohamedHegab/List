@@ -26,6 +26,7 @@ class Api::V1::CardsController < Api::BaseController
 	  @card = Card.new(card_params)
 		@card.list = @list
 	  @card.owner = current_user
+
 	  authorize! :create, @card
 
     if @card.valid? && @card.save
@@ -37,9 +38,9 @@ class Api::V1::CardsController < Api::BaseController
 
 	def destroy
     if @card.destroy
-			render json: { message: 'card destroyed'}, status: 200
+			render json: { message: 'Card destroyed'}, status: 200
     else
-			render json: { message: 'card not destroyed'}, status: 422
+			render json: { message: 'Card not destroyed'}, status: 422
     end
 	end
 

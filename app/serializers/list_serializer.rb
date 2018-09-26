@@ -3,4 +3,5 @@ class ListSerializer < ActiveModel::Serializer
 
   has_one :owner
   has_many :users
+  has_many :cards
 end
