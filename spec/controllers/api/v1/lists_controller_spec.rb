@@ -169,7 +169,7 @@ RSpec.describe Api::V1::ListsController, type: :controller do
         }.to change(List, :count).by(-1)
       end
     end
-    context "can't destroy the list when sales" do 
+    context "can't destroy the list when member" do 
       login_member
       before(:each) do 
         @list = FactoryBot.create :list
