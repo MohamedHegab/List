@@ -6,12 +6,18 @@
 #          api_users_signup POST   /users/signup(.:format)                                                                  api/v1/users#create {:format=>:json}
 #                 api_users GET    /users(.:format)                                                                         api/v1/users#index {:format=>:json}
 #                  api_user GET    /users/:id(.:format)                                                                     api/v1/users#show {:format=>:json}
+#         api_card_comments GET    /cards/:card_id/comments(.:format)                                                       api/v1/comments#index {:format=>:json}
+#                           POST   /cards/:card_id/comments(.:format)                                                       api/v1/comments#create {:format=>:json}
+#               api_comment GET    /comments/:id(.:format)                                                                  api/v1/comments#show {:format=>:json}
+#                           PATCH  /comments/:id(.:format)                                                                  api/v1/comments#update {:format=>:json}
+#                           PUT    /comments/:id(.:format)                                                                  api/v1/comments#update {:format=>:json}
+#                           DELETE /comments/:id(.:format)                                                                  api/v1/comments#destroy {:format=>:json}
 #            api_list_cards GET    /lists/:list_id/cards(.:format)                                                          api/v1/cards#index {:format=>:json}
 #                           POST   /lists/:list_id/cards(.:format)                                                          api/v1/cards#create {:format=>:json}
-#             api_list_card GET    /lists/:list_id/cards/:id(.:format)                                                      api/v1/cards#show {:format=>:json}
-#                           PATCH  /lists/:list_id/cards/:id(.:format)                                                      api/v1/cards#update {:format=>:json}
-#                           PUT    /lists/:list_id/cards/:id(.:format)                                                      api/v1/cards#update {:format=>:json}
-#                           DELETE /lists/:list_id/cards/:id(.:format)                                                      api/v1/cards#destroy {:format=>:json}
+#                  api_card GET    /cards/:id(.:format)                                                                     api/v1/cards#show {:format=>:json}
+#                           PATCH  /cards/:id(.:format)                                                                     api/v1/cards#update {:format=>:json}
+#                           PUT    /cards/:id(.:format)                                                                     api/v1/cards#update {:format=>:json}
+#                           DELETE /cards/:id(.:format)                                                                     api/v1/cards#destroy {:format=>:json}
 #    assign_member_api_list POST   /lists/:id/assign_member(.:format)                                                       api/v1/lists#assign_member {:format=>:json}
 #  unassign_member_api_list POST   /lists/:id/unassign_member(.:format)                                                     api/v1/lists#unassign_member {:format=>:json}
 #                 api_lists GET    /lists(.:format)                                                                         api/v1/lists#index {:format=>:json}
@@ -38,11 +44,15 @@ Rails.application.routes.draw do
       post 'users/signup' => 'users#create'
       resources :users, only: [:index, :show]
 
-      resources :lists do 
-        resources :cards
-        member do
-          post 'assign_member'
-          post 'unassign_member'
+      shallow do
+        resources :lists do 
+          resources :cards do
+            resources :comments
+          end
+          member do
+            post 'assign_member'
+            post 'unassign_member'
+          end
         end
       end
     
