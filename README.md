@@ -18,6 +18,9 @@ This Api has the following, and more:
      - Cards
        - Comments
          - Replies
+         
+#### This is POSTMAN COLLECTION for testing the endpoints
+https://www.getpostman.com/collections/59750c4b4be2085c57bc
 
 * Ruby version 2.5.0
 
