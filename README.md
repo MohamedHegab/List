@@ -41,5 +41,7 @@ bundle exec rake db:create && bundle exec rake db:migrate
 ```
 bundle exec rspec
 ```
+## Authors
 
+* **Mohamed Hegab** - *Initial work* - [MohamedHegab](https://github.com/MohamedHegab)
 
