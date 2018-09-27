@@ -6,7 +6,7 @@ class Api::V1::CommentsController < Api::BaseController
 	load_and_authorize_resource except: [:create]
 	
 	def index
-		comments = @commentable.comments.accessible_by(current_ability).limit(1).offset(@page * 1)
+		comments = @commentable.comments.accessible_by(current_ability).limit(10).offset(@page * 10)
     render json: comments, status: 200
 	end
 
