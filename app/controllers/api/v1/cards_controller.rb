@@ -1,6 +1,6 @@
 class Api::V1::CardsController < Api::BaseController
 	before_action :authenticate_with_token!
-  before_action :set_list, except: [:show]
+  before_action :set_list, except: [:show, :destroy]
   before_action :set_page, only: [:index]
   before_action :set_card, only: [:show, :update, :destroy]
 	load_and_authorize_resource except: [:create]
