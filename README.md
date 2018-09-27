@@ -22,9 +22,9 @@ This Api has the following, and more:
 * Ruby version 2.5.0
 
 * System dependencies
- - [Devise](https://github.com/plataformatec/devise)
- - [CanCanCan](https://github.com/CanCanCommunity/cancancan)
- - [Rspec](https://github.com/rspec/rspec-rails)
+  - [Devise](https://github.com/plataformatec/devise)
+  - [CanCanCan](https://github.com/CanCanCommunity/cancancan)
+  - [Rspec](https://github.com/rspec/rspec-rails)
 
 * Configuration
 
