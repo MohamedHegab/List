@@ -1,26 +1,45 @@
-# README
+# LIST API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Features
 
-Things you may want to cover:
+This Api has the following, and more:
 
-* Ruby version
+- API Versioning
+- Following JSONAPI conventions
+- User Authentication using Devise
+- User Authorization using CanCan
+- Error and Exception Handling
+- Rspec Integration Testing
+- Rspec Unit Testing
+
+## API HAS THE FOLLOWING RESOURCES
+ - User
+   - Lists
+     - Cards
+       - Comments
+         - Replies
+
+* Ruby version 2.5.0
 
 * System dependencies
+ - [Devise](https://github.com/plataformatec/devise)
+ - [CanCanCan](https://github.com/CanCanCommunity/cancancan)
+ - [Rspec](https://github.com/rspec/rspec-rails)
 
 * Configuration
 
 * Database creation
-
+Postgresql Database
+```
+mv config/application-example.yml config/application.yml
+```
 * Database initialization
-
+```
+bundle exec rake db:create && bundle exec rake db:migrate
+```
 * How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
+bundle exec rspec
+```
 
 
