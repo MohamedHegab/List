@@ -17,6 +17,7 @@ class Ability
       can [:create, :read], Card, { list_id: user.lists.pluck(:id) }
       can [:update, :destroy], Card, { owner_id: user.id }
       can [:update, :destroy], Comment, { user_id: user.id }
+      can :destroy, Comment, {commentable_type: 'Comment', commentable_id: Comment.where(user_id: user.id).pluck(:id)}
       can [:create, :read], Comment, commentable_type: 'Card', commentable_id: Card.where(list_id: user.lists.pluck(:id)).pluck(:id)
       can [:create, :read], Comment, commentable_type: 'Comment', commentable_id: Comment.where(commentable_type: 'Card', commentable_id: Card.where(list_id: user.lists.pluck(:id)).pluck(:id)).pluck(:id)
     end
